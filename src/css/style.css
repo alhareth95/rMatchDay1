@@ -1,0 +1,26 @@
+.column {
+    float: left;
+    width: 50%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .blueTeam{
+    background: #c8d7ff;
+  }
+
+  .redTeam{
+    background: #f8c4c4;
+  }
+
+  body {
+    background-color: #c4f8b762;
+    img{
+      opacity: 0.6;
+    }
+   }

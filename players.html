@@ -1,0 +1,17 @@
+<table width="80%" class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Name </th>
+            <th scope="col"> Rate </th>
+            <th scope="col"> Position </th>
+            <th scope="col"> checked </th>
+        </tr>
+    </thead>
+
+<tr ng-repeat="x in dctrl.players">
+    <td>{{x.name}}</td>
+    <td>{{x.rate}}</td>
+    <td>{{x.pose}}</td>
+    <td><input type="checkbox" id="{{x.name}}" name="{{x.name}}" value="{{x}}"></td>
+</tr>
+

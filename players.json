@@ -1,0 +1,15 @@
+[ 
+	{"name" : "Abdulla Almalood", "strength" : 5, "pose": "M"},
+    {"name" : "Abdulla Alabasi", "strength" : 3, "pose": "D"},
+    {"name" : "Isa BuAli", "strength" : 2, "pose": "D"},
+    {"name" : "Duaij Alansari", "strength" : 3, "pose": "D"},
+    {"name" : "Alaa Alzubaidi", "strength" : 3, "pose": "M"},
+    {"name" : "Mohammed Bosharar", "strength" : 2, "pose": "D"},
+    {"name" : "Ilia", "strength" : 5, "pose": "D"},
+    {"name" : "Fayez Fouad", "strength" : 5, "pose": "M"},
+    {"name" : "Abdulrahman Aldaraj", "strength" : 4, "pose": "M"},
+    {"name" : "Abdulrahman Alshaiji", "strength" : 1, "pose": "M"},
+    {"name" : "Ahmed Jasim", "strength" : 5, "pose": "M"},
+    {"name" : "Abdulla Aljabery", "strength" : 3, "pose": "M"}
+]
+

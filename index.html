@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script><link rel="icon" type="image/x-icon" href="favicon.ico">
+	
+    <script src="app.js"></script>
+    
+    <title>Red Panda MatchDay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="./src/css/style.css">
+</head>
+  <body ng-app='RedPandasPlayers'>
+	
+    <div class="container" ng-controller='PlayerController as pp'  >
+		
+		<br/>
+    <h3 align="center"  class="display-3">All Players</h3>
+      <br/>
+		<div class="input-group">
+		  <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+		  	<input class="form-control bg-light text-dark" type="text" placeholder= "Please Search Here" ng-model="pp.search" width="80%"/>
+		  </div>
+		 
+      <table width="80%" class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"> Name </th>
+                <th scope="col"> Rate </th>
+                <th scope="col"> Position </th>
+                <th scope="col"> checked </th>
+            </tr>
+          </thead>
+    
+          <tr ng-repeat="x in pp.players | filter : pp.search">
+              <td>{{x.name}}</td>
+              <td>{{x.strength}}</td>
+              <td>{{x.pose}}</td>
+              <td><input id="{{x.name}}" type="checkbox" value="{{x}}" ng-checked="selection.indexOf(x) > -1" ng-click="pp.toggleSelection(x)"></td>
+          </tr>
+        </table>    
+
+        <h3 align="center"  class="display-3">Match Players</h3>
+        <table width="80%" class="table table-striped table-hover">
+          <thead class="thead-dark">
+              <tr>
+                  <th scope="col"> Name </th>
+                  <th scope="col"> Rate </th>
+                  <th scope="col"> Position </th>
+              </tr>
+            </thead>
+      
+            <tr ng-repeat="y in pp.matchPlayer">
+                <td>{{y.name}}</td>
+                <td>{{y.strength}}</td>
+                <td>{{y.pose}}</td>
+            </tr>
+          </table>    
+
+      <input type="button" class="btn btn-primary btn-lg btn-block" value="Ganerate Teams" ng-click="pp.ganerate()"/>
+     
+      
+      <div class="row">
+        <div class="column">
+          <h3 class="bg-danger" align="center"  class="display-3">Red Team</h3>
+          <h4 ng-if="pp.redTeam.length > 0">Team Strgenth = {{pp.redTeamStrength}}</h4>
+            <table width="50%" class="table">
+                  <tr class="redTeam">
+                      <th scope="col"> Name </th>
+                      <th scope="col"> Rate </th>
+                      <th scope="col"> Position </th>
+                  </tr>
+               
+          
+                <tr class="table-danger" ng-repeat="y in pp.redTeam">
+                    <td>{{y.name}}</td>
+                    <td>{{y.strength}}</td>
+                    <td>{{y.pose}}</td>
+                </tr>
+              </table>  
+            </div>
+        <div class="column"><h3 class="bg-info" align="center" class="display-3">Blue Team</h3>
+          <h4 ng-if="pp.blueTeam.length > 0">Team Strgenth = {{pp.blueTeamStrength}}</h4>
+          <table width="50%" class="table">
+            
+                <tr class="blueTeam">
+                    <th scope="col"> Name </th>
+                    <th scope="col"> Rate </th>
+                    <th scope="col"> Position </th>
+                </tr>
+              
+        
+              <tr lass="table-info" ng-repeat="y in pp.blueTeam">
+                  <td>{{y.name}}</td>
+                  <td>{{y.strength}}</td>
+                  <td>{{y.pose}}</td>
+              </tr>
+            </table>  
+          </div>
+      </div>
+          
+        
+    </div>
+  </div>
+
+  
+  </body>
+</html>
