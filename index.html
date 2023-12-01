@@ -3,14 +3,15 @@
   <head>
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script><link rel="icon" type="image/x-icon" href="favicon.ico">
-	
+   
     <script src="app.js"></script>
     
     <title>Red Panda MatchDay</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script><link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="./src/css/style.css">
 </head>
   <body ng-app='RedPandasPlayers'>
@@ -43,8 +44,8 @@
           </tr>
         </table>    
 
-        <h3 align="center"  class="display-3">Match Players</h3>
-        <table width="80%" class="table table-striped table-hover">
+        
+        <!--table width="80%" class="table table-striped table-hover">
           <thead class="thead-dark">
               <tr>
                   <th scope="col"> Name </th>
@@ -58,47 +59,36 @@
                 <td>{{y.strength}}</td>
                 <td>{{y.pose}}</td>
             </tr>
-          </table>    
-
-      <input type="button" class="btn btn-primary btn-lg btn-block" value="Ganerate Teams" ng-click="pp.ganerate()"/>
-     
+          </table!-->    
+          <ol class="bg-info">
+            <h3 align="center"  class="display-3">Match Players</h3>
+            <li ng-repeat="y in pp.matchPlayer">
+              <td>{{y.name}}</td>
+            </li>
+          </ol>
+      <!--input type="button" class="btn btn-primary btn-lg btn-block" value="Ganerate Teams" ng-click="pp.ganerate()"/!-->
+      <input type="button" class="btn btn-info btn-lg btn-block" value="Ganerate Teams by position" ng-click="pp.newGanerate()"/>
       
       <div class="row">
         <div class="column">
-          <h3 class="bg-danger" align="center"  class="display-3">Red Team</h3>
           <h4 ng-if="pp.redTeam.length > 0">Team Strgenth = {{pp.redTeamStrength}}</h4>
-            <table width="50%" class="table">
-                  <tr class="redTeam">
-                      <th scope="col"> Name </th>
-                      <th scope="col"> Rate </th>
-                      <th scope="col"> Position </th>
-                  </tr>
-               
-          
-                <tr class="table-danger" ng-repeat="y in pp.redTeam">
-                    <td>{{y.name}}</td>
-                    <td>{{y.strength}}</td>
-                    <td>{{y.pose}}</td>
-                </tr>
-              </table>  
+              <ol  style="text-align: center; background-color: #d1d1d1;">
+                <h3 class="bg-default" align="center"  class="display-3">White Team</h3>
+                <li ng-repeat="y in pp.redTeam">
+                  {{y.name}}  {{y.pose}}
+                </li>
+              </ol> 
             </div>
-        <div class="column"><h3 class="bg-info" align="center" class="display-3">Blue Team</h3>
+        <div class="column">
           <h4 ng-if="pp.blueTeam.length > 0">Team Strgenth = {{pp.blueTeamStrength}}</h4>
-          <table width="50%" class="table">
-            
-                <tr class="blueTeam">
-                    <th scope="col"> Name </th>
-                    <th scope="col"> Rate </th>
-                    <th scope="col"> Position </th>
-                </tr>
-              
-        
-              <tr lass="table-info" ng-repeat="y in pp.blueTeam">
-                  <td>{{y.name}}</td>
-                  <td>{{y.strength}}</td>
-                  <td>{{y.pose}}</td>
-              </tr>
-            </table>  
+          
+          <ol class="text-light bg-dark" style="text-align: center; background-color: #000; color: #FFF;">
+            <h3 class="darken" align="center" class="display-3">Black Team</h3>
+            <li ng-repeat="y in pp.blueTeam">
+              {{y.name}}  {{y.pose}}
+            </li>
+          </ol>
+         
           </div>
       </div>
           

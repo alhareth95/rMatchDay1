@@ -31,14 +31,11 @@
 	};
 	}
 
+	
+	  
 
 	function PlayerController(PlayerListService) {
 		var pla = this;
-
-		
-		
-		
-		
 		pla.search = "";
 		pla.result = "";
 		pla.matchPlayer = [];
@@ -57,9 +54,16 @@
 		pla.blueTeam = [];
 		pla.blueTeamStrength ;
 		pla.redTeamStrength ;
-		pla.ganerate = function ganerate(){
+		/*pla.ganerate = function ganerate(){
+			//console.log("before shuffle " , pla.matchPlayer);
+			pla.matchPlayer = shuffle(pla.matchPlayer);
+			//console.log("after shuffle " , pla.matchPlayer);
 			var result = equalTeams(pla.matchPlayer);
-		
+			
+		var midfielderPlayer = pla.matchPlayer.filter(o => o.pose=="M");
+		console.log("midfielderPlayer " , midfielderPlayer);
+		var defenderPlayer = pla.matchPlayer.filter(o => o.pose=="D");
+		console.log("defenderPlayer " , defenderPlayer);
 		pla.blueTeam = result.teams[0];
 		pla.redTeam = result.teams[1];
 		pla.blueTeamStrength = result.strengths[0];
@@ -69,7 +73,7 @@
 			if(pla.blueTeamStrength < pla.redTeamStrength){
 				weekerTeam = 0;
 			}
-			var leftedPlayer = pla.matchPlayer;
+			var leftedPlayer = pla.matchPlayer.slice();
 			for(var i = 0 ; i < pla.blueTeam.length ; i ++){
 				var player1 = pla.blueTeam[i];
 				var player2 = pla.redTeam[i];
@@ -93,7 +97,94 @@
 				
 			}
 		}
+		}*/
+
+		pla.newGanerate = function newGanerate(){
+		pla.matchPlayer = shuffle(pla.matchPlayer);
+			
+		var ForwardPlayer = pla.matchPlayer.filter(o => o.pose=="F");	
+		var midfielderPlayer = pla.matchPlayer.filter(o => o.pose=="M");
+		
+		var mResult = equalTeams(midfielderPlayer);
+		var defenderPlayer = pla.matchPlayer.filter(o => o.pose=="D");
+		var fResult = equalTeams(ForwardPlayer);
+		console.log(ForwardPlayer , "forwardPlayer");
+		var dResult = equalTeams(defenderPlayer);
+		var teamA = [];
+		var teamAStrngeth = 0;
+		var teamB = [];
+		var teamBStrngeth = 0;
+		if(mResult.strengths[0] >= mResult.strengths[1]){
+			if(dResult.strengths[0] > dResult.strengths[1]){
+				teamA = [...mResult.teams[0] , ...dResult.teams[1], ...fResult.teams[0]];
+				teamB = [...mResult.teams[1] , ...dResult.teams[0], ...fResult.teams[1]];
+				teamAStrngeth = mResult.strengths[0] + dResult.strengths[1] + fResult.strengths[0];
+				teamBStrngeth = mResult.strengths[1] + dResult.strengths[0] + fResult.strengths[1];
+			}else{
+				teamA = [...mResult.teams[0] , ...dResult.teams[0] , ...fResult.teams[1]];
+				teamB = [...mResult.teams[1] , ...dResult.teams[1] , ...fResult.teams[0]];
+				teamAStrngeth = mResult.strengths[0] + dResult.strengths[0]  + fResult.strengths[1];
+				teamBStrngeth = mResult.strengths[1] + dResult.strengths[1]  + fResult.strengths[0];
+			}
+		}else{
+			if(dResult.strengths[0] < dResult.strengths[1]){
+				teamA = [...mResult.teams[0] , ...dResult.teams[1], ...fResult.teams[1]];
+				teamB = [...mResult.teams[1] , ...dResult.teams[0], ...fResult.teams[0]];
+				teamAStrngeth = mResult.strengths[0] + dResult.strengths[1]  + fResult.strengths[1];
+				teamBStrngeth = mResult.strengths[1] + dResult.strengths[0]  + fResult.strengths[0];
+			}else{
+				teamA = [...mResult.teams[0] , ...dResult.teams[0], ...fResult.teams[0]];
+				teamB = [...mResult.teams[1] , ...dResult.teams[1], ...fResult.teams[1]];
+				teamAStrngeth = mResult.strengths[0] + dResult.strengths[0] + fResult.strengths[0];
+				teamBStrngeth = mResult.strengths[1] + dResult.strengths[1] + fResult.strengths[1];
+			}
 		}
+		console.log("team A" , teamA);
+		console.log("team B" , teamB);
+		pla.blueTeam = teamA;
+		pla.redTeam = teamB;
+		pla.blueTeamStrength = teamAStrngeth;
+		pla.redTeamStrength = teamBStrngeth;
+
+
+
+
+		if(pla.matchPlayer.length % 2 == 1 || pla.matchPlayer.length > (pla.blueTeam.length + pla.redTeam.length)){
+			
+			var leftedPlayer = pla.matchPlayer.slice();
+			for(var i = 0 ; i < pla.blueTeam.length ; i ++){
+				var player1 = pla.blueTeam[i];
+				var player2 = pla.redTeam[i];
+				var idx = leftedPlayer.indexOf(player1);
+				if (idx > -1) {
+					leftedPlayer.splice(idx, 1);
+				}
+				var idx = leftedPlayer.indexOf(player2);
+				if (idx > -1) {
+					leftedPlayer.splice(idx, 1);
+				}
+			}
+			console.log("lefted players" ,leftedPlayer);
+			if(leftedPlayer != null && leftedPlayer.length > 0){
+				for(var i = 0 ; i<leftedPlayer.length ; i++){
+					var weekerTeam = 1 ;
+					if(pla.blueTeamStrength < pla.redTeamStrength){
+						weekerTeam = 0;
+					}
+					if(weekerTeam == 0){
+						pla.blueTeam.push(leftedPlayer[i]);
+						pla.blueTeamStrength = pla.blueTeamStrength + leftedPlayer[i].strength;
+					}else{
+						pla.redTeam.push(leftedPlayer[i]);
+						pla.redTeamStrength = pla.redTeamStrength + leftedPlayer[i].strength;
+					}
+				}
+				
+				
+			}
+		}
+		}
+		
 		
 
 		pla.toggleSelection = function toggleSelection(player) {
@@ -110,7 +201,7 @@
 		  };
 		
 		function compareStrength(a, b) { // for sorting players and selections
-			return a.strength - b.strength;
+			return a.strength - b.strength ;
 		}
 		function teamStrength(players) {
 			return players.reduce(function(total, player) {return total + player.strength;}, 0);
@@ -136,9 +227,29 @@
 				}
 			}
 		}
+		function shuffle(array) {
+			let currentIndex = array.length,  randomIndex;
+		  
+			// While there remain elements to shuffle.
+			while (currentIndex > 0) {
+		  
+			  // Pick a remaining element.
+			  randomIndex = Math.floor(Math.random() * currentIndex);
+			  currentIndex--;
+		  
+			  // And swap it with the current element.
+			  [array[currentIndex], array[randomIndex]] = [
+				array[randomIndex], array[currentIndex]];
+			}
+		  
+			return array;
+		  }
+
 		function equalTeams(players) {
 			// SORT PLAYERS FROM WEAKEST TO STRONGEST
+			console.log("before sort" , players);
 			players.sort(compareStrength);
+			console.log("after sort" , players.sort(compareStrength));
 			// INITIAL DISTRIBUTION OF PLAYERS INTO WEAKER AND STRONGER TEAM (ALTERNATING)
 			var wTeam = [], sTeam = [];
 			for (var i = players.length % 2; i < players.length; i += 2) {
